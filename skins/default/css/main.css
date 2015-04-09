@@ -1,0 +1,42 @@
+
+.auto_login_table_main {
+    font-family: 'Nanum Gothic', sans-serif;
+    font-size:11pt;
+    width: 100%;
+    border-collapse:collapse;
+}
+
+.auto_login_table_main thead {
+    font-size:12pt;
+    border: 1px solid #BBBBBB;
+    padding-bottom:15px;
+    padding-top: 15px;
+    background-color: rgba(207, 234, 8, 0.56);
+}
+
+.auto_login_table_main thead td {
+    padding-bottom:5px;
+    padding-top: 5px;
+}
+
+.auto_login_manager_element {
+    border: 10px #000000;
+    border: 1px solid #BBBBBB;
+}
+
+.auto_login_table_main td {
+    padding-bottom: 2px;
+    padding-top: 2px;
+    text-align: center;
+    vertical-align: middle;
+}
+.auto_login_table_ua{
+    color: #999999;
+    font-size:9pt;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.auto_login_table_count{
+    font-size: 12pt;
+}

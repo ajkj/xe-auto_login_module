@@ -1,0 +1,56 @@
+<!--@if(isset($max_auto_login)&&isset($need_to_remove_login))-->
+<div class="auto_login_manager_message">
+    <p>{$lang->auto_login_max_limit_excced_message_1} {$max_auto_login}{$lang->auto_login_max_limit_excced_message_2}</p>
+    <p>{$lang->auto_login_max_limit_excced_message_3} {$need_to_remove_login}{$lang->auto_login_max_limit_excced_message_4}</p>
+    <a href="{$no_auto_login_return_url}"><p>{$lang->auto_login_max_limit_excced_message_5}</p></a>
+
+</div>
+<!---------------------------->
+<!--@else-->
+<load target="modules/auto_login/m.skins/default/js/main.js" />
+<!--@end-->
+<load target="modules/auto_login/m.skins/default/css/main.css" />
+<load target="https://cdn.jsdelivr.net/font-nanum/1.0/nanumgothic/nanumgothic.css"/>
+<style>
+</style>
+<!--@if(isset($auto_login_no_record))-->
+<h2>{$lang->auto_login_no_record}</h2>
+<!--@end-->
+<table loop="$auto_login_info => $key,$val" class="auto_login_manager_table">
+    <!-- 자동 로그인 기록 입니다-->
+    <tbody class="auto_login_manager_element">
+        <tr>
+            <td class="auto_login_manager_table_main_title" colspan="2">자동로그인 {$val->count}</td>
+        </tr>
+        <tr>
+            <td class="auto_login_manager_table_title">자동로그인<br>정보</td>
+            <td class="auto_login_manager_table_body">{$val->device_info}</td>
+        </tr>
+        <tr>
+            <td class="auto_login_manager_table_title">등록시점IP</td>
+            <td class="auto_login_manager_table_body">{$val->ip_address}</td>
+        </tr>
+        <tr>
+            <td class="auto_login_manager_table_title">등록 시간</td>
+            <td class="auto_login_manager_table_body">{$val->time_added}</td>
+        </tr>
+        <tr>
+            <td class="auto_login_manager_table_title">최총<br>자동로그인</td>
+            <td class="auto_login_manager_table_body">{$val->time_last_auto_login}</td>
+        </tr>
+        <tr>
+            <td class="auto_login_manager_table_title">User<br>Agent</td>
+            <td class="auto_login_manager_table_body">{$val->user_agent}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="auto_login_manager_table_body_button">
+                <form method="post" action=".">
+                    <input type="hidden" name="module" value="auto_login"/>
+                    <input type="hidden" name="act" value="procAuto_loginRemoveAutoLoginToken"/>
+                    <input type="hidden" name="auto_login_mapping" value="{$val->auto_login_token_mapping}" >
+                    <button type="submit">{$lang->auto_login_remove}</button>
+            </form>
+            </td>
+        </tr>
+    </tbody>
+</table>

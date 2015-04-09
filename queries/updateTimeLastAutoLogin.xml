@@ -1,0 +1,11 @@
+<query id="updateTimeLastAutoLogin" action="update">
+    <tables>
+        <table name="auto_login_info" />
+    </tables>
+    <columns>
+        <column name="time_last_auto_login" var="time_last_auto_login" notnull="notnull" />
+    </columns>
+    <conditions>
+        <condition operation="equal" column="auto_login_token" var="auto_login_token" notnull="notnull"  />
+    </conditions>
+</query>

@@ -1,0 +1,11 @@
+<query id="deleteExpiredLoginToken" action="delete">
+    <tables>
+        <table name="auto_login_info" />
+    </tables>
+    <conditions>
+        <condition operation="less" column="time_last_auto_login" var="time_last_auto_login"
+                   notnull="notnull" filter="bignumber" pipe="or" />
+        <condition operation="less" column="time_max_valid_until" var="time_max_valid_until"
+                   notnull="notnull" filter="bignumber" pipe="or"/>
+    </conditions>
+</query>

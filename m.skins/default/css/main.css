@@ -1,0 +1,32 @@
+
+.auto_login_manager_table{
+    border-collapse: collapse;
+    width: 100%;
+    font-family: 'Nanum Gothic', sans-serif;
+    margin-bottom: 50px;
+}
+
+.auto_login_manager_element td {
+    border: 1px solid #BBBBBB;
+}
+
+.auto_login_manager_table_main_title{
+    font-size: 12pt;
+    vertical-align: middle;
+    text-align: center;
+    background-color:  rgba(207, 234, 8, 0.56); ;
+}
+.auto_login_manager_table_title {
+    width: 20%;
+    vertical-align: middle;
+    text-align: center;
+    background-color: #DDDDDD;
+}
+.auto_login_manager_table_body {
+    width: auto;
+    padding-left: 10px;
+}
+.auto_login_manager_table_body_button{
+    vertical-align: middle;
+    text-align: center;
+}

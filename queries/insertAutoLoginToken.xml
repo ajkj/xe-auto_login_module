@@ -1,0 +1,15 @@
+<query id="insertAutoLoginToken" action="insert">
+    <tables>
+        <table name="auto_login_info" />
+    </tables>
+    <columns>
+        <column name="member_srl"  var="member_srl" notnull="notnull"/>
+        <column name="auto_login_token" var="auto_login_token" notnull="notnull" />
+        <column name="ip_address" var="ip_address" notnull="notnull" />
+        <column name="time_added" var="time_added" notnull="notnull"/>
+        <column name="time_max_valid_until" var="time_max_valid_until" notnull="notnull"/>
+        <column name="time_last_auto_login" var="time_last_auto_login" />
+        <column name="user_agent" var="user_agent"/>
+        <column name="etc" var="etc" />
+    </columns>
+</query>

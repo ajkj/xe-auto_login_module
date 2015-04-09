@@ -1,0 +1,11 @@
+<query id="getInfoByAutoLoginToken" action="select">
+    <tables>
+        <table name="auto_login_info" />
+    </tables>
+    <columns>
+        <column name="member_srl"  var="member_srl"/>
+    </columns>
+    <conditions>
+        <condition operation="equal" column="auto_login_token" var="auto_login_token" />
+    </conditions>
+</query>

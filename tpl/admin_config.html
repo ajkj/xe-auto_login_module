@@ -1,0 +1,213 @@
+<form action="./" method="post" class="x_form-horizontal" xmlns="http://www.w3.org/1999/html">
+
+    <input type="hidden" name="module" value="auto_login" />
+    <input type="hidden" name="act" value="procAuto_loginAdminConfigChange" />
+
+    <section class="section">
+        <h1>{$lang->module_design_info}</h1>
+        <div class="x_control-group">
+            <label class="x_control-label" for="auto_login_layout">{$lang->layout}</label>
+            <div class="x_controls">
+                <select id="auto_login_layout" name="layout_srl">
+                    <option value="0">{$lang->notuse}</option>
+                    <option loop="$layout_list => $key,$val" value="{$val->layout_srl}" selected="selected"|cond="$val->layout_srl == $config->layout_srl">{$val->title} ({$val->layout})</option>
+                </select>
+            </div>
+        </div>
+        <div class="x_control-group">
+            <label class="x_control-label" for="auto_login_mlayout">{$lang->mobile_layout}</label>
+            <div class="x_controls">
+                <select id="auto_login_mlayout" name="mlayout_srl">
+                    <option value="0">{$lang->notuse}</option>
+                    <option loop="$mlayout_list => $key,$val" value="{$val->layout_srl}" selected="selected"|cond="$val->layout_srl == $config->mlayout_srl">{$val->title} ({$val->layout})</option>
+                </select>
+            </div>
+        </div>
+        <div class="x_control-group">
+            <label class="x_control-label" for="skin">{$lang->skin} </label>
+            <div class="x_controls">
+                <select id="skin" name="skin" onchange="doGetSkinColorset(this.options[this.selectedIndex].value)">
+                    <option loop="$skin_list=>$key,$val" value="{$key}" selected="selected"|cond="$config->skin==$key">{$val->title} ({$key})</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="x_control-group">
+            <label class="x_control-label" for="mskin">{$lang->mobile_skin}</label>
+            <div class="x_controls">
+                <select id="mskin" name="mskin">
+                    <option loop="$mskin_list=>$key,$val" value="{$key}" selected="selected"|cond="$config->mskin==$key">{$val->title} ({$key})</option>
+                </select>
+            </div>
+        </div>
+
+
+
+        <!-- 모듈 활성화 여부를 체크합니다 -->
+    </section>
+
+
+    <section class="section">
+        <h1>{$lang->module_name}</h1>
+
+
+        <div class="x_control-group">
+            <label for="auto_login_module_enabled" class="x_control-label">{$lang->module_on_off}</label>
+            <div class="x_controls">
+                <input type="checkbox" checked="checked"|cond="$config->auto_login_module_enabled=='Y'" id="auto_login_module_enabled" name="auto_login_module_enabled" value="Y"/>
+            </div>
+        </div>
+
+
+        <div class="x_control-group">
+            <label for="auto_login_mobile_prefer" class="x_control-label">{$lang->auto_login_mobile_prefer}</label>
+            <div class="x_controls">
+                <select name="auto_login_mobile_prefer" id="auto_login_mobile_prefer" >
+                        <option value="N" selected="true"|cond="$config->auto_login_mobile_prefer=='N'" >미사용</option>
+                        <option value="M" selected="true"|cond="$config->auto_login_mobile_prefer=='M'">Mobile에서만</option>
+                        <option value="P" selected="true"|cond="$config->auto_login_mobile_prefer=='P'">PC에서만</option>
+                        <option value="PM" selected="true"|cond="$config->auto_login_mobile_prefer=='PM'">PC Mobile 모두</option>
+                </select>
+            </div>
+        </div>
+
+
+
+
+
+        <!--자동로그인 Cookie 이름 선택이 가능하도록 합니다.-->
+        <div class="x_control-group">
+            <label for="auto_login_cookie_name" class="x_control-label">{$lang->auto_login_cookie_name}</label>
+            <div class="x_controls">
+                <input type="text" id="auto_login_cookie_name" name="auto_login_cookie_name"
+                        value="{$config->auto_login_cookie_name}"/>
+                <p class="x_help-block">{$lang->auto_login_cookie_name_description}</p>
+            </div>
+        </div>
+
+
+        <!-- PC에서 자동로그인 최대 유효시간을 설정합니다.-->
+        <div class="x_control-group">
+            <label for="auto_login_max_time_pc" class="x_control-label">{$lang->auto_login_max_time_pc}</label>
+            <div class="x_controls">
+                <input type="text" id="auto_login_max_time_pc" name="auto_login_max_time_pc"
+                       value="{$config->auto_login_max_time_pc}"/>
+                <p class="x_help-block">{$lang->auto_login_max_time_pc_description}</p>
+            </div>
+        </div>
+
+        <div class="x_control-group">
+            <label for="auto_login_update_required_time_pc" class="x_control-label">{$lang->auto_login_update_required_time_pc}</label>
+            <div class="x_controls">
+                <input type="text" id="auto_login_update_required_time_pc" name="auto_login_update_required_time_pc"
+                       value="{$config->auto_login_update_required_time_pc}"/>
+                <p class="x_help-block">{$lang->auto_login_update_required_time_pc_description}</p>
+            </div>
+        </div>
+
+
+
+        <!-- 모바일에서 자동로그인 최대 유효시간을 설정합니다 -->
+        <div class="x_control-group">
+            <label for="auto_login_max_time_mobile" class="x_control-label">{$lang->auto_login_max_time_mobile}</label>
+            <div class="x_controls">
+                <input type="text" id="auto_login_max_time_mobile" name="auto_login_max_time_mobile"
+                       value="{$config->auto_login_max_time_mobile}"/>
+                <p class="x_help-block">{$lang->auto_login_max_time_mobile_description}</p>
+            </div>
+
+        </div>
+
+        <div class="x_control-group">
+            <label for="auto_login_update_required_time_mobile" class="x_control-label">{$lang->auto_login_update_required_time_mobile}</label>
+            <div class="x_controls">
+                <input type="text" id="auto_login_update_required_time_mobile" name="auto_login_update_required_time_mobile"
+                       value="{$config->auto_login_update_required_time_mobile}"/>
+                <p class="x_help-block">{$lang->auto_login_update_required_time_mobile_description}</p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <section class="section">
+        <h1>{$lang->auto_login_limit_by_group_title}</h1>
+        <!-- 그룹별 자동로그인 허용 갯수를 설정합니다 -->
+        <p class="x_help-block"{$lang->auto_login_limit_by_group_title_description}</p>
+        <div class="x_control-group" loop="$group_list => $key,$val">
+            <label  for="auto_login_limit_by_group_{$key}" class="x_control-label">{$val->title}</label>
+            <div class="x_controls">
+                <input type="number" min="0" max="1000" value="{$config->auto_login_limit_by_group_[$key]}" name="auto_login_limit_by_group_{$key}" id="auto_login_limit_by_group_{$key}"/>
+            </div>
+        </div>
+        <div class="x_control-group">
+            <label for="auto_login_limit_by_is_admin" class="x_control-label">{$lang->auto_login_limit_by_is_admin}</label>
+            <div class="x_controls">
+                <input type="number" value="{$config->auto_login_limit_by_is_admin}" name="auto_login_limit_by_is_admin" id="auto_login_limit_by_is_admin"/>
+                <p class="x_help-block">  {$lang->auto_login_limit_by_is_admin_description}</p>
+            </div>
+
+        </div>
+    </section>
+    <div class="x_clearfix btnArea">
+        <span class="x_pull-right"><input class="x_btn x_btn-primary" type="submit" value="{$lang->cmd_save}" /></span>
+    </div>
+
+<!--
+
+    <div class="x_control-group">
+        <label for="insert_document" class="x_control-label">{$lang->point_insert_document}</label>
+        <div class="x_controls">
+            <input type="number" name="insert_document" id="insert_document" value="{$module_config['insert_document']}" /> {$module_config['point_name']}
+        </div>
+    </div>
+
+    <div class="x_control-group">
+        <label for="insert_comment" class="x_control-label">{$lang->point_insert_comment}</label>
+        <div class="x_controls">
+            <input type="number" name="insert_comment" id="insert_comment" value="{$module_config['insert_comment']}" /> {$module_config['point_name']}
+        </div>
+    </div>
+
+
+    <div class="x_control-group">
+        <label for="upload_file" class="x_control-label">{$lang->point_upload_file}</label>
+        <div class="x_controls">
+            <input type="number" name="upload_file" id="upload_file" value="{$module_config['upload_file']}" /> {$module_config['point_name']}
+        </div>
+    </div>
+    <div class="x_control-group">
+        <label for="download_file" class="x_control-label">{$lang->point_download_file}</label>
+        <div class="x_controls">
+            <input type="number" name="download_file" id="download_file" value="{$module_config['download_file']}" /> {$module_config['point_name']}
+        </div>
+    </div>
+    <div class="x_control-group">
+        <label for="read_document" class="x_control-label">{$lang->point_read_document}</label>
+        <div class="x_controls">
+            <input type="number" name="read_document" id="read_document" value="{$module_config['read_document']}" /> {$module_config['point_name']}
+        </div>
+    </div>
+    <div class="x_control-group">
+        <label for="voted" class="x_control-label">{$lang->point_voted}</label>
+        <div class="x_controls">
+            <input type="number" name="voted" id="voted" value="{$module_config['voted']}" /> {$module_config['point_name']}
+        </div>
+    </div>
+    <div class="x_control-group">
+        <label for="blamed" class="x_control-label">{$lang->point_blamed}</label>
+        <div class="x_controls">
+            <input type="number" name="blamed" id="blamed" value="{$module_config['blamed']}" /> {$module_config['point_name']}
+        </div>
+    </div>
+    <div class="x_clearfix btnArea">
+        <button class="x_btn x_btn-warning x_pull-left" type="button" onclick="doPointReset('{$module_config['module_srl']?$module_config['module_srl']:$module_srls}')">{$lang->cmd_reset}</button>
+        <span class="x_pull-right">
+            <input class="x_btn x_btn-primary" type="submit" value="{$lang->cmd_save}">
+        </p>
+    </div>
+
+    -->
+</form>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<module>
+    <grants>
+
+    </grants>
+    <permissions>
+        <permission action="dispAuto_loginAdminConfig" target="manager"/>
+        <permission action="procAuto_loginAdminConfigChange" target="manager"/>
+        <permission action="dispAuto_loginAutoLoginManager" target="member"/>
+        <permission action="procAuto_loginRemoveAutoLoginToken" target="member"/>
+
+    </permissions>
+    <actions>
+        <action name="dispAuto_loginAdminConfig" type="view"
+                menu_index="true"
+                admin_index="true"/>
+        <action name="procAuto_loginAdminConfigChange" type="controller"/>
+
+        <action name="procAuto_loginRemoveAutoLoginToken" type="controller"/>
+        <action name="dispAuto_loginAutoLoginManager" type="view"/>
+
+    </actions>
+    <menus>
+        <menu name="AutoLogin">
+            <title xml:lang="en">AutoLogin</title>
+            <title xml:lang="ko">자동로그인</title>
+        </menu>
+    </menus>
+</module>

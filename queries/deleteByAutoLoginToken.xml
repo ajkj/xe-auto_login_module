@@ -1,0 +1,8 @@
+<query id="deleteByAutoLoginToken" action="delete">
+    <tables>
+        <table name="auto_login_info" />
+    </tables>
+    <conditions>
+        <condition operation="equal" column="auto_login_token" var="auto_login_token" />
+    </conditions>
+</query>
