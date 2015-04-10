@@ -9,8 +9,9 @@ class auto_loginController extends auto_login {
      */
     public function triggerAutoLoginAlways(){
 
-        $oModule = getController('member');
-        $oModule->addMemberMenu('dispAuto_loginAutoLoginManager', 'auto_login_menu_name');
+        if($this->config->auto_login_module_enabled !== 'Y'){
+            return new Object();
+        }
 
         if(isset($_COOKIE['xeak']) === false){
             setCookie('xeak',"null",1,'/');
@@ -28,12 +29,9 @@ class auto_loginController extends auto_login {
         Context::addHtmlHeader($js);
 
 
-        if($this->config->mobile_prefer_auto_login === true){
-
-        }
-
-
         if(Context::get('is_logged') === true){
+            $oModule = getController('member');
+            $oModule->addMemberMenu('dispAuto_loginAutoLoginManager', 'auto_login_menu_name');
             return new Object();
         }
 
@@ -61,6 +59,9 @@ class auto_loginController extends auto_login {
      */
     public function triggerAfterDoLogin($logged_info)
     {
+        if($this->config->auto_login_module_enabled !== 'Y'){
+            return new Object();
+        }
         return $this->makeAutoLogin($logged_info);
     }
 
@@ -236,8 +237,8 @@ class auto_loginController extends auto_login {
 
 
     /**
-     * @info private : AutoLogin을 진행하는 Method 입니다.
-     * @return Object : Erorr가 있는 경우를 제외하고 빈 Object 생성.
+     * @info private : AutoLogin 을 진행하는 Method 입니다.
+     * @return Object : Erorr 가 있는 경우를 제외하고 빈 Object 생성.
      */
     private function doAutoLogin(){
 

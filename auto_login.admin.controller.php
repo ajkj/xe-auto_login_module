@@ -36,6 +36,8 @@ class auto_loginAdminController extends auto_login {
         }
         if(!empty($args->auto_login_module_enabled)){
             $config->auto_login_module_enabled = $args->auto_login_module_enabled;
+        }else{
+            $config->auto_login_module_enabled = 'N';
         }
 
         if(!empty($args->auto_login_mobile_prefer)){
