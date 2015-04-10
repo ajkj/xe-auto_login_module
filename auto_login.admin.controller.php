@@ -53,7 +53,7 @@ class auto_loginAdminController extends auto_login {
         //auto_login_mobile_prefer
         // set Layout info
         if(!empty($args->auto_login_mobile_prefer)){
-            $config->layout_srl = $args->auto_login_mobile_prefer;
+            $config->auto_login_mobile_prefer = $args->auto_login_mobile_prefer;
         }
 
 

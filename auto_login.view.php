@@ -9,10 +9,10 @@ class auto_loginView extends auto_login
     {
         $oLayoutModel = getModel('layout');
         $layout_info = $oLayoutModel->getLayout($this->config->layout_srl);
-        if (!isset($layout_info)){
+        if (isset($layout_info)) {
+            $this->module_info->layout_srl = $this->config->layout_srl;
             $this->setLayoutPath($layout_info->path);
         }
-        $this->setLayoutPath($layout_info->path);
 
         $template_path = sprintf('%sskins/%s', $this->module_path, $this->config->skin);
         $this->setTemplatePath($template_path);
@@ -114,16 +114,6 @@ class auto_loginView extends auto_login
 
 
         Context::set('auto_login_info', $auto_login_info);
-
-
-        $oLayoutModel = getModel('layout');
-        $layout_info = $oLayoutModel->getLayout($this->config->layout_srl);
-        if($layout_info)
-        {
-            $this->module_info->layout_srl = $this->config->layout_srl;
-            $this->setLayoutPath($layout_info->path);
-        }
-
 
         $this->setTemplateFile('auto_login_manager');
 

@@ -11,10 +11,10 @@ class auto_loginMobile extends auto_loginView
     {
         $oLayoutModel = getModel('layout');
         $layout_info = $oLayoutModel->getLayout($this->config->mlayout_srl);
-        if (!isset($layout_info)) {
+        if (isset($layout_info)) {
+            $this->module_info->mlayout_srl = $this->config->mlayout_srl;
             $this->setLayoutPath($layout_info->path);
         }
-        $this->setLayoutPath($layout_info->path);
 
         $template_path = sprintf('%sm.skins/%s', $this->module_path, $this->config->skin);
         $this->setTemplatePath($template_path);
