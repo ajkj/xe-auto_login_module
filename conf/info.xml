@@ -3,7 +3,7 @@
     <title xml:lang="ko">자동로그인 모듈</title>
     <title xml:lang="en">AutoLogin</title>
     <description xml:lang="ko">자동 로그인 모듈 입니다.</description>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <category>login</category>
     <date>2015-04-10</date>
     <license>LGPL v2</license>
