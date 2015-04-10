@@ -29,6 +29,7 @@ class auto_loginController extends auto_login {
         Context::addHtmlHeader($js);
 
 
+
         if(Context::get('is_logged') === true){
             $oModule = getController('member');
             $oModule->addMemberMenu('dispAuto_loginAutoLoginManager', 'auto_login_menu_name');
@@ -97,7 +98,6 @@ class auto_loginController extends auto_login {
             $_SESSION[$this->module_self_info->module_name]['status'] = $auto_login_config;
             $_SESSION[$this->module_self_info->module_name]['return_url'] = $return_url_after_auto_login_manager;
             $return_url_now = getNotEncodedUrl('', 'module', '', 'act', 'dispAuto_loginAutoLoginManager');
-
 
             Context::set('success_return_url',$return_url_now );
 
