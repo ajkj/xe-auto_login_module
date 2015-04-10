@@ -20,8 +20,8 @@ class auto_login extends ModuleObject {
 
         $this->module_self_info = new stdClass();
         $this->module_self_info->module_name = 'auto_login';
-        $this->module_self_info->module_version_code = 1;
-        $this->module_self_info->module_version_name = '0.1';
+        $this->module_self_info->module_version_code = 2;
+        $this->module_self_info->module_version_name = '1.0.1';
 
 
         $this->config_session = new stdClass();
