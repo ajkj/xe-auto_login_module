@@ -37,13 +37,13 @@
             <td></td>
             <td></td>
             <td></td>
-            <td rowspan="3">
-                <form class="auto_login_manager_form" method="post" action=".">
-                    <input type="hidden" name="module" value="auto_login"/>
-                    <input type="hidden" name="act" value="procAuto_loginRemoveAutoLoginToken"/>
-                    <input type="hidden" name="auto_login_mapping" value="{$val->auto_login_token_mapping}" >
-                    <button type="submit">{$lang->auto_login_remove}</button>
-                </form>
+            <td class="auto_login_manager_form" rowspan="3">
+                    <form method="post" action=".">
+                        <input type="hidden" name="module" value="auto_login"/>
+                        <input type="hidden" name="act" value="procAuto_loginRemoveAutoLoginToken"/>
+                        <input type="hidden" name="auto_login_mapping" value="{$val->auto_login_token_mapping}" >
+                        <button type="submit">{$lang->auto_login_remove}</button>
+                    </form>
             </td>
         </tr>
         <tr>

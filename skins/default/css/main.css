@@ -40,3 +40,8 @@
 .auto_login_table_count{
     font-size: 12pt;
 }
+
+.auto_login_manager_form form {
+    margin:0;
+
+}
