@@ -1,5 +1,5 @@
 <?php
-require_once ('./modules/auto_login/vendor/autoload.php');
+require_once (_XE_PATH_.'modules/auto_login/vendor/autoload.php');
 class auto_login extends ModuleObject {
 
     protected $config;
