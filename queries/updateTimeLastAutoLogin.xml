@@ -3,6 +3,7 @@
         <table name="auto_login_info" />
     </tables>
     <columns>
+        <column name="user_agent" var="user_agent" notnull="notnull" />
         <column name="time_last_auto_login" var="time_last_auto_login" notnull="notnull" />
     </columns>
     <conditions>

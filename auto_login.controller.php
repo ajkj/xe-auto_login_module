@@ -319,6 +319,7 @@ class auto_loginController extends auto_login {
             $args = new stdClass();
             $args->time_last_auto_login = time();
             $args->auto_login_token = $token_hmac;
+            $args->user_agent = $_SERVER['HTTP_USER_AGENT'];
             executeQuery('auto_login.updateTimeLastAutoLogin',$args);
             return new Object();
         }else{
