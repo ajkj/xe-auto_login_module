@@ -36,13 +36,6 @@ class auto_login extends ModuleObject {
             $this->config_session->auto_login_update_required_time  = $this->config->auto_login_update_required_time_pc;
         }
 
-
-
-        // @debug 디버깅용 코드입니다. 0이면 짝수일때 1이면 홀수인 member_srl에 한하여 자동로그인 모듈을 이용합니다.
-        $this->$auto_login_debug = new stdClass();
-        $this->$auto_login_debug->target_member_srl = 0;
-
-
     }
 
 
@@ -369,5 +362,24 @@ class auto_login extends ModuleObject {
      */
     protected function base64_encode_uri($str){
         return str_replace(array('+','/','='),array('-','_',''),base64_encode($str));
+    }
+
+    protected function auto_login_debug_log($str){
+        $auto_login_debugger_log_path2 = _XE_PATH_.'files/config/auto_login_debug.module.php';
+
+        if(file_exists($auto_login_debugger_log_path2) === false){
+            file_put_contents($auto_login_debugger_log_path2, '<?php exit(); /*');
+        }
+        $asdf_fp = fopen($auto_login_debugger_log_path2,'a');
+        $auto_login_debug_log = new stdClass();
+        $auto_login_debug_log->act = Context::get('act');
+        $auto_login_debug_log->REQUEST_TIME_FLOAT = $_SERVER['REQUEST_TIME_FLOAT'];
+        $auto_login_debug_log->REQUEST_URI = $_SERVER['REQUEST_URI'];
+        $auto_login_debug_log->REQUEST_METHOD = $_SERVER['REQUEST_METHOD'];
+        $auto_login_debug_log->request_var_get = $_GET;
+        $auto_login_debug_log->request_var_post = $_POST;
+        $auto_login_debug_log->custom_message_module = $str;
+        fwrite($asdf_fp, json_encode($auto_login_debug_log,JSON_UNESCAPED_UNICODE));
+        fclose($asdf_fp);
     }
 }

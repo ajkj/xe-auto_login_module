@@ -86,6 +86,8 @@ class auto_loginController extends auto_login {
             if(isset($logged_info) === false) return new Object();
         }
 
+        $this->auto_login_debug_log('Make Auto Login');
+
 
         // 자동로그이 허용 상태 조회
         $auto_login_config = $this->checkAutoLoginStatus($logged_info);
@@ -177,6 +179,7 @@ class auto_loginController extends auto_login {
      */
     private function checkAutoLoginStatus($logged_info)
     {
+        $this->auto_login_debug_log('check AutoLogin Status');
         $group_list =$logged_info->group_list;
 
         $max_device = PHP_INT_MAX;
@@ -205,6 +208,7 @@ class auto_loginController extends auto_login {
         $result = new Stdclass;
         if($query_result->data->count >= $max_device)
         {
+            $this->auto_login_debug_log('check AutoLogin Status : Problem');
             $result->status = 1;
             $result->max_auto_login = $max_device;
             $result->current_auto_login = $query_result->data->count;
@@ -242,10 +246,14 @@ class auto_loginController extends auto_login {
      */
     private function doAutoLogin(){
 
+
+
         if(empty($_COOKIE[$this->config->auto_login_cookie_name]))
         {
             return new Object();
         }
+
+        $this->auto_login_debug_log('Doing Auto Login');
 
 
         $this->removeExpiredAutoLoginToken();
