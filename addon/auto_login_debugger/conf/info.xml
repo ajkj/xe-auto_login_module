@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addon version="0.2">
+    <title xml:lang="ko">auto Login Debugger</title>
+    <description xml:lang="ko">
+	no comment
+    </description>
+    <version>1.0</version>
+    <date>2015-04-17</date>
+    <author email_address="thename@requery.me" link="http://github.com/ajkj/">
+        <name xml:lang="ko">ajkj</name>
+    </author>
+</addon>
