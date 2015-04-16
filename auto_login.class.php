@@ -361,10 +361,4 @@ class auto_login extends ModuleObject {
     protected function base64_encode_uri($str){
         return str_replace(array('+','/','='),array('-','_',''),base64_encode($str));
     }
-
-
-    protected function __debug($key, $value){
-        header("$key: $value");
-    }
-
 }
