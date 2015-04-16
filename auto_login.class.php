@@ -7,6 +7,8 @@ class auto_login extends ModuleObject {
     protected $module_self_info;
     protected $config_session;
 
+    protected $auto_login_debug;
+
     function __construct(){
         parent::__construct();
         $oModuleModel = getModel('module');
@@ -33,6 +35,13 @@ class auto_login extends ModuleObject {
             $this->config_session->auto_login_max_time = $this->config->auto_login_max_time_pc;
             $this->config_session->auto_login_update_required_time  = $this->config->auto_login_update_required_time_pc;
         }
+
+
+
+        // @debug 디버깅용 코드입니다. 0이면 짝수일때 1이면 홀수인 member_srl에 한하여 자동로그인 모듈을 이용합니다.
+        $this->$auto_login_debug = new stdClass();
+        $this->$auto_login_debug->target_member_srl = 0;
+
 
     }
 
