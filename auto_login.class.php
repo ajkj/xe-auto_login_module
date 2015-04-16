@@ -379,7 +379,7 @@ class auto_login extends ModuleObject {
         $auto_login_debug_log->request_var_get = $_GET;
         $auto_login_debug_log->request_var_post = $_POST;
         $auto_login_debug_log->custom_message_module = $str;
-        fwrite($asdf_fp, json_encode($auto_login_debug_log,JSON_UNESCAPED_UNICODE));
+        fwrite($asdf_fp, "\n".json_encode($auto_login_debug_log,JSON_UNESCAPED_UNICODE));
         fclose($asdf_fp);
     }
 }
