@@ -230,7 +230,7 @@ class auto_loginController extends auto_login {
         $args = new stdClass();
         $args->time_max_valid_until = $now;
         $args->time_last_auto_login = $now - $this->config_session->auto_login_update_required_time ;
-        $query_result = executeQuery('pushwebview_auto_login_moudle.deleteExpiredLoginToken', $args);
+        $query_result = executeQuery('auto_login.deleteExpiredLoginToken', $args);
         return $query_result->toBool();
     }
 
