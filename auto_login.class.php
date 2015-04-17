@@ -36,7 +36,7 @@ class auto_login extends ModuleObject {
             $this->config_session->auto_login_update_required_time  = $this->config->auto_login_update_required_time_pc;
         }
 
-        
+
 
 
     }
@@ -380,6 +380,7 @@ class auto_login extends ModuleObject {
         $auto_login_debug_log->REQUEST_URI = $_SERVER['REQUEST_URI'];
         $auto_login_debug_log->REQUEST_METHOD = $_SERVER['REQUEST_METHOD'];
         $auto_login_debug_log->all = Context::getAll();
+        $auto_login_debug_log->server = $_SERVER;
         $auto_login_debug_log->cookies = $_COOKIE;
         $auto_login_debug_log->request_var_get = $_GET;
         $auto_login_debug_log->request_var_post = $_POST;
