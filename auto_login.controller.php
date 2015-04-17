@@ -269,12 +269,14 @@ class auto_loginController extends auto_login {
 
         if($query_result->toBool() !== true)
         {
+            $this->auto_login_debug_log('Auto Login Fail 1');
             setcookie($this->config->auto_login_cookie_name,'null',1,'/',$_SERVER['HTTP_HOST']);
             return new Object();
         }
 
         if(count($query_result->data)  < 1)
         {
+            $this->auto_login_debug_log('Auto Login Fail 2');
             setcookie($this->config->auto_login_cookie_name,'null',1,'/',$_SERVER['HTTP_HOST']);
             return new Object();
         }
@@ -302,6 +304,7 @@ class auto_loginController extends auto_login {
         }
         else
         {
+            $this->auto_login_debug_log('Auto Login Fail1 3');
             return new Object(-1, 'AutoLogin Error : Controller');
         }
 
@@ -315,6 +318,7 @@ class auto_loginController extends auto_login {
         if(isset($limit_date) && $limit_date > 0)
         {
             if($member_info->change_password_date >= date('YmdHis', strtotime('-'.$limit_date.' day')) ){
+                $this->auto_login_debug_log('Auto Login Fail 4');
                 return $this->removeAutoLoginToken();
             }
         }
@@ -324,6 +328,7 @@ class auto_loginController extends auto_login {
 
         if($login_result->toBool() === true)
         {
+            $this->auto_login_debug_log('Auto Login Real Success');
             // update last login date
             $args = new stdClass();
             $args->time_last_auto_login = time();
@@ -332,6 +337,7 @@ class auto_loginController extends auto_login {
             executeQuery('auto_login.updateTimeLastAutoLogin',$args);
             return new Object();
         }else{
+            $this->auto_login_debug_log('Auto Login Fail 5');
             return $login_result;
         }
     }
