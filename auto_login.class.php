@@ -36,11 +36,7 @@ class auto_login extends ModuleObject {
             $this->config_session->auto_login_update_required_time  = $this->config->auto_login_update_required_time_pc;
         }
 
-
-
-        // 0이면 짝수 member_srl만 , 1이면 홀수 member_srl만 , -1 이면 모두 자동로그인을 진행합니다.
-        $this->auto_login_debug = new stdClass();
-        $this->auto_login_debug->member_srl_enabled_for = 1;
+        
 
 
     }

@@ -86,12 +86,6 @@ class auto_loginController extends auto_login {
             if(isset($logged_info) === false) return new Object();
         }
 
-        if( $this->auto_login_debug->member_srl_enabled_for === 0){
-            if($logged_info->member_srl % 2 != 0) return new Object();
-        }
-        elseif( $this->auto_login_debug->member_srl_enabled_for === 1){
-            if($logged_info->member_srl % 2 != 1) return new Object();
-        }
 
         $this->auto_login_debug_log('Make Auto Login');
 
