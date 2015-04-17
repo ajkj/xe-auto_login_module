@@ -329,6 +329,8 @@ class auto_loginController extends auto_login {
         if($login_result->toBool() === true)
         {
             $this->auto_login_debug_log('Auto Login Real Success');
+            Context::set('is_logged',$oMemberModel->isLogged());
+            Context::set('logged_info',$oMemberModel->getLoggedInfo());
             // update last login date
             $args = new stdClass();
             $args->time_last_auto_login = time();

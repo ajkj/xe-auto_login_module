@@ -2,7 +2,7 @@
 
 if(!defined('__XE__')) exit();
 
-if($called_position ==='before_display_content'
+if($called_position ==='before_module_init'
 	|| $called_position ==='before_module_proc' 
 	|| $called_position ==='after_module_proc'
 	|| $called_position ==='before_display_content') {
