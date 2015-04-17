@@ -13,15 +13,15 @@ if($called_position ==='before_display_content'
 	if(Context::get('is_logged') !== true) return;
 
 
-	if(isset($GLOBALS['auto_login_debugger']) === false)
+	if(isset($_SESSION['auto_login_debugger']) === false)
 	{
-		$GLOBALS['auto_login_debugger'] = new stdClass();
-		$GLOBALS['auto_login_debugger']->group_list = Context::get('logged_info')->group_list;
+        $_SESSION['auto_login_debugger'] = new stdClass();
+        $_SESSION['auto_login_debugger']->group_list = Context::get('logged_info')->group_list;
 		return;
 	}
 	else
 	{
-		if($GLOBALS['auto_login_debugger']->group_list != Context::get('logged_info')->group_list){
+		if($_SESSION['auto_login_debugger']->group_list != Context::get('logged_info')->group_list){
 
 			if(file_exists($auto_login_debugger_log_path) === false){
 				file_put_contents($auto_login_debugger_log_path, '<?php exit(); /*');
@@ -35,6 +35,8 @@ if($called_position ==='before_display_content'
 			$auto_login_debug_log->REQUEST_METHOD = $_SERVER['REQUEST_METHOD'];
 			$auto_login_debug_log->request_var_get = $_GET;
 			$auto_login_debug_log->request_var_post = $_POST;
+            $auto_login_debug_log->all = Context::getAll();
+            $auto_login_debug_log->cookies = $_COOKIE;
 
 			$auto_login_debug_log_json = json_encode($auto_login_debug_log,JSON_UNESCAPED_UNICODE);
 			$auto_login_debug_fp = fopen($auto_login_debugger_log_path, 'a');
