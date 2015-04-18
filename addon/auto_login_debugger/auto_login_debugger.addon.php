@@ -35,10 +35,11 @@ if($called_position ==='before_module_init'
 			$auto_login_debug_log->REQUEST_METHOD = $_SERVER['REQUEST_METHOD'];
 			$auto_login_debug_log->request_var_get = $_GET;
 			$auto_login_debug_log->request_var_post = $_POST;
-            $auto_login_debug_log->all = Context::getAll();
             $auto_login_debug_log->cookies = $_COOKIE;
             $auto_login_debug_log->server = $_SERVER;
-            $auto_login_debug_log->self = serialize($auto_login_debug_log);
+            $auto_login_debug_log->all = Context::getAll();
+            unset($auto_login_debug_log->all->lang);
+
 
 			$auto_login_debug_log_json = json_encode($auto_login_debug_log,JSON_UNESCAPED_UNICODE);
 			$auto_login_debug_fp = fopen($auto_login_debugger_log_path, 'a');

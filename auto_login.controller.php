@@ -288,9 +288,8 @@ class auto_loginController extends auto_login {
         executeQuery('member.deleteAuto_login',$args);
 
         // get member information
-        $columnList = array('user_id','change_password_date');
         $oMemberModel = getModel('member');
-        $member_info = $oMemberModel->getMemberInfoByMemberSrl($query_result->data[0]->member_srl, $columnList);
+        $member_info = $oMemberModel->getMemberInfoByMemberSrl($query_result->data[0]->member_srl);
         $oMemberConfig = $oMemberModel->getMemberConfig();
 
         $login_target = null;
