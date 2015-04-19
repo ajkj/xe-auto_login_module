@@ -1,3 +1,5 @@
+<load target="modules/auto_login/tpl/js/secure.js" />
+<load target="modules/auto_login/tpl/js/main.js" />
 <form action="./" method="post" class="x_form-horizontal" xmlns="http://www.w3.org/1999/html">
 
     <input type="hidden" name="module" value="auto_login" />
@@ -43,14 +45,14 @@
 
 
 
-        <!-- 모듈 활성화 여부를 체크합니다 -->
+
     </section>
 
 
+
     <section class="section">
+        <!-- 모듈 활성화 여부를 체크합니다 -->
         <h1>{$lang->module_name}</h1>
-
-
         <div class="x_control-group">
             <label for="auto_login_module_enabled" class="x_control-label">{$lang->module_on_off}</label>
             <div class="x_controls">
@@ -58,7 +60,7 @@
             </div>
         </div>
 
-
+<!--
         <div class="x_control-group">
             <label for="auto_login_mobile_prefer" class="x_control-label">{$lang->auto_login_mobile_prefer}</label>
             <div class="x_controls">
@@ -70,10 +72,52 @@
                 </select>
             </div>
         </div>
+        -->
 
 
+        <!-- 자동로그인 기본 설정 -->
+        <div class="x_control-group">
+            <label for="auto_login_keep_signed_default_pc" class="x_control-label">{$lang->auto_login_keep_signed_default_pc}</label>
+            <div class="x_controls">
+                <select name="auto_login_keep_signed_default_pc" id="auto_login_keep_signed_default_pc" >
+                    <option value="N" selected="true"|cond="$config->auto_login_keep_signed_default_pc=='N'" >안함</option>
+                    <option value="S" selected="true"|cond="$config->auto_login_keep_signed_default_pc=='S'">스마트</option>
+                    <option value="Y" selected="true"|cond="$config->auto_login_keep_signed_default_pc=='Y'">항상</option>
+                </select>
+                <p class="x_help_block">{$lang->auto_login_keep_signed_default_pc_description}</p>
+                <p class="x_help-block">{$lang->auto_login_keep_signed_smart_description}</p>
+            </div>
+        </div>
 
+        <div class="x_control-group">
+            <label for="auto_login_keep_signed_default_mobile" class="x_control-label">{$lang->auto_login_keep_signed_default_mobile}</label>
+            <div class="x_controls">
+                <select name="auto_login_keep_signed_default_mobile" id="auto_login_keep_signed_default_mobile" >
+                    <option value="N" selected="true"|cond="$config->auto_login_keep_signed_default_mobile=='N'" >안함</option>
+                    <option value="S" selected="true"|cond="$config->auto_login_keep_signed_default_mobile=='S'">스마트</option>
+                    <option value="Y" selected="true"|cond="$config->auto_login_keep_signed_default_mobile=='Y'">항상</option>
+                </select>
+                <p class="x_help_block">{$lang->auto_login_keep_signed_default_mobile_description}</p>
+            </div>
+        </div>
+        <div class="x_control-group">
+            <label for="auto_login_smart_time" class="x_control-label">{$lang->auto_login_smart_time}</label>
+            <div class="x_controls">
+                <input type="text" id="auto_login_smart_time" name="auto_login_smart_time"
+                       value="{$config->auto_login_smart_time}"/>
+                <p class="x_help-block">{$lang->auto_login_smart_time_description}</p>
+            </div>
+        </div>
 
+        <div class="x_control-group">
+            <label for="auto_login_cookie_encryption_password" class="x_control-label">{$lang->auto_login_cookie_encryption_password}</label>
+            <div class="x_controls">
+                <input type="text" id="auto_login_cookie_encryption_password" name="auto_login_cookie_encryption_password"
+                       value="{$config->auto_login_cookie_encryption_password}"/>
+                <button id="auto_login_cookie_encryption_password_generate">임의 생성하기</button>
+                <p class="x_help-block">{$lang->auto_login_cookie_encryption_password_description}</p>
+            </div>
+        </div>
 
         <!--자동로그인 Cookie 이름 선택이 가능하도록 합니다.-->
         <div class="x_control-group">
@@ -125,8 +169,9 @@
                        value="{$config->auto_login_update_required_time_mobile}"/>
                 <p class="x_help-block">{$lang->auto_login_update_required_time_mobile_description}</p>
             </div>
-
         </div>
+
+
 
     </section>
 
@@ -155,59 +200,4 @@
         <span class="x_pull-right"><input class="x_btn x_btn-primary" type="submit" value="{$lang->cmd_save}" /></span>
     </div>
 
-<!--
-
-    <div class="x_control-group">
-        <label for="insert_document" class="x_control-label">{$lang->point_insert_document}</label>
-        <div class="x_controls">
-            <input type="number" name="insert_document" id="insert_document" value="{$module_config['insert_document']}" /> {$module_config['point_name']}
-        </div>
-    </div>
-
-    <div class="x_control-group">
-        <label for="insert_comment" class="x_control-label">{$lang->point_insert_comment}</label>
-        <div class="x_controls">
-            <input type="number" name="insert_comment" id="insert_comment" value="{$module_config['insert_comment']}" /> {$module_config['point_name']}
-        </div>
-    </div>
-
-
-    <div class="x_control-group">
-        <label for="upload_file" class="x_control-label">{$lang->point_upload_file}</label>
-        <div class="x_controls">
-            <input type="number" name="upload_file" id="upload_file" value="{$module_config['upload_file']}" /> {$module_config['point_name']}
-        </div>
-    </div>
-    <div class="x_control-group">
-        <label for="download_file" class="x_control-label">{$lang->point_download_file}</label>
-        <div class="x_controls">
-            <input type="number" name="download_file" id="download_file" value="{$module_config['download_file']}" /> {$module_config['point_name']}
-        </div>
-    </div>
-    <div class="x_control-group">
-        <label for="read_document" class="x_control-label">{$lang->point_read_document}</label>
-        <div class="x_controls">
-            <input type="number" name="read_document" id="read_document" value="{$module_config['read_document']}" /> {$module_config['point_name']}
-        </div>
-    </div>
-    <div class="x_control-group">
-        <label for="voted" class="x_control-label">{$lang->point_voted}</label>
-        <div class="x_controls">
-            <input type="number" name="voted" id="voted" value="{$module_config['voted']}" /> {$module_config['point_name']}
-        </div>
-    </div>
-    <div class="x_control-group">
-        <label for="blamed" class="x_control-label">{$lang->point_blamed}</label>
-        <div class="x_controls">
-            <input type="number" name="blamed" id="blamed" value="{$module_config['blamed']}" /> {$module_config['point_name']}
-        </div>
-    </div>
-    <div class="x_clearfix btnArea">
-        <button class="x_btn x_btn-warning x_pull-left" type="button" onclick="doPointReset('{$module_config['module_srl']?$module_config['module_srl']:$module_srls}')">{$lang->cmd_reset}</button>
-        <span class="x_pull-right">
-            <input class="x_btn x_btn-primary" type="submit" value="{$lang->cmd_save}">
-        </p>
-    </div>
-
-    -->
 </form>

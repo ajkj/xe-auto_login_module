@@ -40,22 +40,25 @@ class auto_loginAdminController extends auto_login {
             $config->auto_login_module_enabled = 'N';
         }
 
-        if(!empty($args->auto_login_mobile_prefer)){
-            $config->auto_login_mobile_prefer = $args->auto_login_mobile_prefer;
+        if(!empty($args->auto_login_keep_signed_default_pc)){
+            $config->auto_login_keep_signed_default_pc = $args->auto_login_keep_signed_default_pc;
+        }
+        if(!empty($args->auto_login_keep_signed_default_mobile)){
+            $config->auto_login_keep_signed_default_mobile = $args->auto_login_keep_signed_default_mobile;
         }
 
+        if(!empty($args->auto_login_smart_time)){
+            $config->auto_login_smart_time = (int)$args->auto_login_smart_time;
+        }
+
+
+        if(!empty($args->auto_login_cookie_encryption_password)){
+            $config->auto_login_cookie_encryption_password = $args->auto_login_cookie_encryption_password;
+        }
 
         if(!empty($args->auto_login_cookie_name)){
             $config->auto_login_cookie_name = $args->auto_login_cookie_name;
         }
-
-
-        //auto_login_mobile_prefer
-        // set Layout info
-        if(!empty($args->auto_login_mobile_prefer)){
-            $config->auto_login_mobile_prefer = $args->auto_login_mobile_prefer;
-        }
-
 
         if(!empty($args->auto_login_max_time_pc)){
             $config->auto_login_max_time_pc = (int)$args->auto_login_max_time_pc;
@@ -72,6 +75,8 @@ class auto_loginAdminController extends auto_login {
         if(!empty($args->auto_login_update_required_time_mobile)){
             $config->auto_login_update_required_time_mobile = (int)$args->auto_login_update_required_time_mobile;
         }
+
+
 
         $oMemberModel = getModel('member');
         $group_list = $oMemberModel->getGroups();

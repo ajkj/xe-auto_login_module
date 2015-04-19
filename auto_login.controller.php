@@ -18,13 +18,45 @@ class auto_loginController extends auto_login {
         }
         $js = '<script>';
         $js .='document.cookie ="xeak=null; expires=Thu, 01-Jan-1970 00:00:01 GMT; Max-Age=-1427897740; path=/";';
-        if($this->config->auto_login_mobile_prefer === 'M' && Mobile::isMobileCheckByAgent() === true){
-            $js .= 'jQuery(document).ready(function(){jQuery(\'input[name="keep_signed"]\').attr(\'checked\', true);});';
-        }elseif($this->config->auto_login_mobile_prefer === 'PM'){
-            $js .= 'jQuery(document).ready(function(){jQuery(\'input[name="keep_signed"]\').attr(\'checked\', true);});';
-        }elseif($this->config->auto_login_mobile_prefer === 'P' && Mobile::isMobileCheckByAgent() === false){
-            $js .= 'jQuery(document).ready(function(){jQuery(\'input[name="keep_signed"]\').attr(\'checked\', true);});';
+
+
+        if(Mobile::isFromMobilePhone() === false)
+        {
+            if($this->config->auto_login_keep_signed_default_pc === 'Y')
+            {
+                $js .= 'jQuery(document).ready(function(){jQuery(\'input[name="keep_signed"]\').attr(\'checked\', true);});';
+            }
+            elseif($this->config->auto_login_keep_signed_default_pc =='S')
+            {
+                if($this->setKeepSigned() === true)
+                {
+                    $js .= 'jQuery(document).ready(function(){jQuery(\'input[name="keep_signed"]\').attr(\'checked\', true);});';
+                }
+            }
+            elseif($this->config->auto_login_keep_signed_default_pc =='N')
+            {
+                ;
+            }
         }
+        else
+        {
+            if($this->config->auto_login_keep_signed_default_mobile === 'Y')
+            {
+                $js .= 'jQuery(document).ready(function(){jQuery(\'input[name="keep_signed"]\').attr(\'checked\', true);});';
+            }
+            elseif($this->config->auto_login_keep_signed_default_mobile =='S')
+            {
+                if($this->setKeepSigned() === true)
+                {
+                    $js .= 'jQuery(document).ready(function(){jQuery(\'input[name="keep_signed"]\').attr(\'checked\', true);});';
+                }
+            }
+            elseif($this->config->auto_login_keep_signed_default_mobile =='N')
+            {
+                ;
+            }
+        }
+
         $js .= '</script>';
         Context::addHtmlHeader($js);
 
@@ -63,6 +95,25 @@ class auto_loginController extends auto_login {
         if($this->config->auto_login_module_enabled !== 'Y'){
             return new Object();
         }
+
+
+        if( Mobile::isFromMobilePhone() === false)
+        {
+          if($this->config->auto_login_keep_signed_default_pc ==='S'
+              && isset($GLOBALS['AUTO_LOGIN_DOING']) === false
+              && empty(Context::get('keep_signed'))){
+              $this->updateSmartLoginCookie($logged_info);
+          }
+        }
+        else
+        {
+            if($this->config->auto_login_keep_signed_default_mobile ==='S'
+                && isset($GLOBALS['AUTO_LOGIN_DOING']) === false
+                && empty(Context::get('keep_signed'))){
+                $this->updateSmartLoginCookie($logged_info);
+            }
+        }
+
         return $this->makeAutoLogin($logged_info);
     }
 
@@ -85,6 +136,9 @@ class auto_loginController extends auto_login {
             $logged_info = Context::get('logged_info');
             if(isset($logged_info) === false) return new Object();
         }
+
+
+        $this->deleteSmartLoginCookie();
 
 
         // 자동로그이 허용 상태 조회
@@ -151,6 +205,9 @@ class auto_loginController extends auto_login {
         $this->removeExpiredAutoLoginToken();
         $cookie = $_COOKIE[$this->config->auto_login_cookie_name];
 
+
+
+        setCookie($this->config->auto_login_cookie_name.'_smt','null',1,'/',$_SERVER['HTTP_HOST']);
         if(isset($cookie)){
             setcookie($this->config->auto_login_cookie_name,'null',1,'/',$_SERVER['HTTP_HOST']);
             $token_hmac = hash_hmac('sha256',$cookie,$this->parseUAForAutoLoginToken(),false);
@@ -249,6 +306,7 @@ class auto_loginController extends auto_login {
 
 
         $this->removeExpiredAutoLoginToken();
+        $this->deleteSmartLoginCookie();
 
         $token = $_COOKIE[$this->config->auto_login_cookie_name];
         $token_hmac = hash_hmac('sha256',$token,$this->parseUAForAutoLoginToken(), false);
@@ -310,6 +368,8 @@ class auto_loginController extends auto_login {
         }
 
         $oMemberController = getController('member');
+
+        $GLOBALS['AUTO_LOGIN_DOING'] = true;
         $login_result = $oMemberController->doLogin($login_target,'', false);
 
         if($login_result->toBool() === true)
@@ -424,4 +484,123 @@ class auto_loginController extends auto_login {
     }
 
 
+
+
+
+
+
+
+
+
+    // 14일내에 2번 이상 로그인시시 (단 1번 로그인 이후 12시간 경과해야 함)
+
+
+    // add smart login always
+   // return true or false;
+    private function setKeepSigned()
+    {
+        if( Context::get('is_logged') === true) return false;
+
+        if(file_exists(_XE_PATH_.'modules/auto_login/auto_login.user_config.php')){
+            require_once(_XE_PATH_.'modules/auto_login/auto_login.user_config.php');
+            $auto_loginUser_config = new auto_loginUser_config();
+            return $auto_loginUser_config->setKeepSigned();
+        }
+        else
+        {
+            if($_COOKIE[$this->config->auto_login_cookie_name.'_smt'] === 'Y'){
+                return true;
+            }
+        }
+    }
+
+    // postion at after login success
+    // return nothing
+    private function updateSmartLoginCookie($logged_info)
+    {
+        if( $logged_info == null) return;
+
+        $now = time();
+
+        if(file_exists(_XE_PATH_.'modules/auto_login/auto_login.user_config.php')){
+            require_once(_XE_PATH_.'modules/auto_login/auto_login.user_config.php');
+            $auto_loginUser_config = new auto_loginUser_config();
+            $auto_loginUser_config->updateSmartLoginCookie();
+            return;
+        }
+
+
+        // 스마트 로그인 쿠키가 없다면, 쿠키를 생성한다.
+        if(isset($_COOKIE[$this->config->auto_login_cookie_name.'_smt']) === false)
+        {
+            $this->resetSmartLoginCookie($logged_info);
+            return;
+        }
+        else
+        {
+            // 우선적으로 암호화한 쿠키를 풀어준다.
+            $oAES = new AesPhpSimple($this->config->auto_login_cookie_encryption_cipher_mode);
+            $auto_login_cookie = $oAES->decrypt($_COOKIE[$this->config->auto_login_cookie_name.'_smt'], $this->config->auto_login_cookie_encryption_password, 'base64_uri');
+
+            if($auto_login_cookie == -1 || $auto_login_cookie == null){
+                $this->resetSmartLoginCookie($logged_info);
+                return;
+            }
+
+
+            // 그리고 형식을 분리한다.
+            $arr = explode('@',$auto_login_cookie);
+
+            // 구조가 비정상적이면 리셋.
+            if($arr === false){
+                $this->resetSmartLoginCookie($logged_info);
+                return;
+            }
+
+            // member_srl이 다르다면 쿠키를 리셋
+            elseif($arr[0] !== $logged_info->member_srl)
+            {
+                $this->resetSmartLoginCookie($logged_info);
+                return;
+            }
+
+            // 2번째 로그인 시간이 존재한하고, 2번째 시간이 현재시간보다 12시간 이전이라면, 자동로그인을 특정 시간동안 On해줍니다.
+            elseif( isset($arr[2])
+                && isset($arr[1])
+                && $arr[2]+43200 < $now
+                && $arr[1] > $now -$this->config->auto_login_smart_time
+                && $arr[2] > ($arr[1] + 43200))
+            {
+                setcookie($this->config->auto_login_cookie_name.'_smt', 'Y', $now+$this->config->auto_login_smart_time,'/', $_SERVER['HTTP_HOST'], $this->config_static->cookie_secure, $this->config_static->cookie_httponly);
+                return;
+            }
+            // 2번째 시간이 없이 1번째 시간만 존재하고, 1번째 접속 시간이 현재시간보다 12시간 이전이라면 2번째 쿠키를 추가해 줍니다.
+            elseif(isset($arr[1]) && $arr[1]+43200 < $now && $arr[1] && $arr[1] > $now -$this->config->auto_login_smart_time )
+            {
+                $auto_login_cookie = $oAES->encrypt($auto_login_cookie.'@'.$now, $this->config->auto_login_cookie_encryption_password, 'base64_uri');
+                setcookie($this->config->auto_login_cookie_name.'_smt', $auto_login_cookie , $now+$this->config->auto_login_smart_time,'/', $_SERVER['HTTP_HOST'], $this->config_static->cookie_secure, $this->config_static->cookie_httponly);
+            }
+        }
+
+
+    }
+    private function resetSmartLoginCookie($logged_info){
+        $auto_login_cookie_string = $logged_info->member_srl .'@'. time();
+        $oAES = new AesPhpSimple($this->config->auto_login_cookie_encryption_cipher_mode);
+        $result = $oAES->encrypt($auto_login_cookie_string,$this->config->auto_login_cookie_encryption_password, 'base64_uri');
+        setcookie($this->config->auto_login_cookie_name.'_smt', $result, time()+1209600,'/', $_SERVER['HTTP_HOST'], $this->config_static->cookie_secure, $this->config_static->cookie_httponly);
+        return;
+    }
+
+    public function deleteSmartLoginCookie(){
+        if(file_exists(_XE_PATH_.'modules/auto_login/auto_login.user_config.php')){
+            require_once(_XE_PATH_.'modules/auto_login/auto_login.user_config.php');
+            $auto_loginUser_config = new auto_loginUser_config();
+            $auto_loginUser_config->deleteSmartLoginCookie();
+            return;
+        }
+        else{
+            setcookie($this->config->auto_login_cookie_name.'_smt', 'null', 1,'/', $_SERVER['HTTP_HOST'], $this->config_static->cookie_secure, $this->config_static->cookie_httponly);
+        }
+    }
 }
