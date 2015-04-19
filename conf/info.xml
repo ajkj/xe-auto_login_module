@@ -5,7 +5,7 @@
     <description xml:lang="ko">자동 로그인 모듈 입니다.</description>
     <version>1.0.3</version>
     <category>login</category>
-    <date>2015-04-17</date>
+    <date>2015-04-20</date>
     <license>LGPL v2</license>
     <author email_address="thename@requery.me" link="https://github.com/ajkj">
         <name xml:lang="ko">ajkj</name>
