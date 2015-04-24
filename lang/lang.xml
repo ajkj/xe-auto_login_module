@@ -1,12 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <lang>
-    <item name="module_name">
+    <item name="auto_login_module_name">
         <value xml:lang="ko"><![CDATA[AutoLogin Module]]></value>
         <value xml:lang="en"><![CDATA[AutoLogin Module]]></value>
     </item>
 
 
-    <item name="module_design_info">
+    <item name="auto_login_module_design_info">
         <value xml:lang="ko"><![CDATA[AutoLogin 모듈 디자인 설정]]></value>
         <value xml:lang="en"><![CDATA[AutoLogin Design Config]]></value>
     </item>
@@ -15,7 +15,7 @@
 
 
 
-    <item name="module_on_off">
+    <item name="auto_login_module_on_off">
         <value xml:lang="ko"><![CDATA[자동로그인 모듈 사용여부]]></value>
         <value xml:lang="en"><![CDATA[AutoLogin Module Enabled]]></value>
     </item>
