@@ -10,6 +10,5 @@
         <column name="time_max_valid_until" var="time_max_valid_until" notnull="notnull"/>
         <column name="time_last_auto_login" var="time_last_auto_login" />
         <column name="user_agent" var="user_agent"/>
-        <column name="etc" var="etc" />
     </columns>
 </query>
