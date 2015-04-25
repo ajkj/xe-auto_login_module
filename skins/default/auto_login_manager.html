@@ -6,15 +6,10 @@
     <a href="{$no_auto_login_return_url}"><p>{$lang->auto_login_max_limit_excced_message_5}</p></a>
 
 </div>
-<!--@else-->
-<load target="modules/auto_login/skins/default/js/main.js" />
 <!--@end-->
 <load target="modules/auto_login/skins/default/css/main.css" />
 <load target="https://cdn.jsdelivr.net/font-nanum/1.0/nanumgothic/nanumgothic.css"/>
-
 <div class="auto_login_manager_message">{$message}</div>
-
-
 <!--@if(isset($auto_login_no_record))-->
 <h2>{$lang->auto_login_no_record}</h2>
 <!--@end-->
