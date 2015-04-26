@@ -29,7 +29,17 @@
     </item>
 
     <item name="auto_login_keep_signed_smart_description">
-        <value xml:lang="ko"><![CDATA[스마트를 사용할경우 일정시간(기본값 7일) 내에 12시간의 간격을 두고 최소 2번 이상 동일한 사람이 동일한 웹 브라우져에서 로그인을 한 경우에 한해 자동로그인을 기본으로 켜 줍니다. ex) 동일한 사람이 동일한 컴퓨터에서 월요일 9시에 로그인 후 화요일 9시에 로그인을 한 경우 추후 로그인시 자동로그인을 기본으로 켜 둡니다.]]></value>
+        <value xml:lang="ko"><![CDATA[스마트를 사용할경우 일정시간(기본값 7일) 내에 12시간의 간격을 두고 최소 2번 이상 동일한 사람이 동일한 웹 브라우져에서 로그인을 한 경우에 한해 자동로그인을 기본으로 켜 줍니다. ex) 동일한 사람이 동일한 컴퓨터에서 월요일 9시에 로그인 후 화요일 9시에 로그인을 한 경우 해당 컴퓨터에서 1주일동안 자동로그인을 기본으로 체크해 둡니다. 따라서 수요일날에 웹사이트 로그인페이지에 접속하면 자동로그인에 기본 체크가 되어 있습니다.]]></value>
+    </item>
+
+
+
+    <item name="auto_login_cookie_encryption_password">
+        <value xml:lang="ko"><![CDATA[쿠키 암호화 비밀번호 ]]></value>
+    </item>
+
+    <item name="auto_login_cookie_encryption_password_description">
+        <value xml:lang="ko"><![CDATA[스마트 자동로그인은 사용자의 재접속 여부를 판단하기 위해 쿠키에 사용자 정보(member_srl)을 저장하며, 보안을 위해 쿠키를 암호화 합니다.(AES128 CTR/CBC + HMAC(SHA256 -> 120bit)이 때 사용하는 비밀번호를 입력합니다. 비밀번호는 제3자가 추측할수 없는 랜덤한 값 이여야 합니다. 사이트 운영 도중 이 값이 바뀔경우 스마트 자동로그인 기록이 초기화 됩니다. 안전을 위해서는 자동으로 생성하는것을 권장합니다.]]></value>
     </item>
 
 
@@ -45,17 +55,8 @@
     </item>
 
     <item name="auto_login_smart_time_description">
-        <value xml:lang="ko"><![CDATA[해당 입력한 시간 내에 2번이상 같은 회원이 동일한 웹브라우져에서 로그인을 할 경우 자동로그인을 켜줍니다. 초단위로 입력해야 하며, 기본값은 604800 (7일) 입니다]]></value>
+        <value xml:lang="ko"><![CDATA[해당 입력한 시간 내에 12시간 간격으로 2번이상 같은 회원이 동일한 웹브라우져에서 로그인을 할 경우 자동로그인을 켜줍니다. 초단위로 입력해야 하며, 기본값은 604800 (7일) 입니다]]></value>
     </item>
-
-    <item name="auto_login_smart_time_description">
-        <value xml:lang="ko"><![CDATA[해당 입력한 시간 내에 2번이상 같은 회원이 동일한 웹브라우져에서 로그인을 할 경우 자동로그인을 켜줍니다. 초단위로 입력해야 하며, 기본값은 604800 (7일) 입니다]]></value>
-    </item>
-
-    <item name="auto_login_smart_time_description">
-        <value xml:lang="ko"><![CDATA[해당 입력한 시간 내에 2번이상 같은 회원이 동일한 웹브라우져에서 로그인을 할 경우 자동로그인을 켜줍니다. 초단위로 입력해야 하며, 기본값은 604800 (7일) 입니다]]></value>
-    </item>
-
 
 
 
@@ -85,13 +86,6 @@
         <value xml:lang="ko"><![CDATA[PC에서 자동로그인을 설정후 지정된 시간내에 재접속해야 자동로그인이 유지되는 시간입니다. 초단위로 입력해야 하며, 기본값은 604800(7일) 입니다.]]></value>
     </item>
 
-    <item name="auto_login_cookie_encryption_password">
-        <value xml:lang="ko"><![CDATA[쿠키 암호화 비밀번호 ]]></value>
-    </item>
-
-    <item name="auto_login_cookie_encryption_password_description">
-        <value xml:lang="ko"><![CDATA[스마트 자동로그인은 사용자의 재접속 여부를 판단하기 위해 쿠키에 사용자 정보(member_srl)을 저장하며, 이 때 사용하는 비밀번호를 입력합니다. 제3자가 추측할수 없어야 합니다. 사이트 운영 도중 이 값이 바뀔경우 스마트 자동로그인 기록이 초기화 됩니다.]]></value>
-    </item>
 
 
 
