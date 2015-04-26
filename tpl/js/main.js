@@ -1,22 +1,18 @@
 jQuery(document).ready(function(){
-    jQuery('.auto_login_manager_element').find('form').each(function(a ,b){
-        jQuery(b).submit(function(e){
-            e.preventDefault();
-            var act = jQuery(e.target).find('input[name="act"]').val();
-            var module = jQuery(e.target).find('input[name="module"]').val();
-            var auto_login_mapping = jQuery(e.target).find('input[name="auto_login_mapping"]').val();
-            jQuery.exec_json(module+'.'+act, {'auto_login_mapping':auto_login_mapping},
-                //success call back
-                function(data){
-                var a = jQuery(e.target).closest('.auto_login_manager_element');
-                a.hide('slow', 'swing', function(){
-                    a.remove();
-                },
-                // error callback
-                function(err){
-
-                });
-            });
-        });
-    });
-});
+    jQuery('#auto_login_cookie_encryption_password_generate').click(function(e){
+        e.preventDefault();
+        if(jQuery('#auto_login_cookie_encryption_password').val() !== ''){
+            if(confirm('기존의 비밀번호를 변경 하시겠습니까? 비밀번호를 변경시 기존에 기록하던 스마트 자동로그인 기록이 무효화 됩니다.')===false){
+                e.cancel();
+                return;
+            }
+        }
+        var list = 'abcdefghkmnpqrstuvwxyzABCDEFGHJKMNPQRSTUVWXYZ123456789!@#$%^&*()[]{}<>?_=+';
+        var i=0;
+        var n ='';
+        for(i=0; i<22; i++){
+            n += list.charAt(SecureNormalRandom(0, list.length-1));
+        }
+        jQuery('#auto_login_cookie_encryption_password').val(n);
+    })
+})

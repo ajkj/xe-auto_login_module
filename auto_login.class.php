@@ -1,5 +1,6 @@
 <?php
 require_once (_XE_PATH_.'modules/auto_login/vendor/autoload.php');
+require_once (_XE_PATH_.'modules/auto_login/AesPhpSimple.php');
 class auto_login extends ModuleObject {
 
     protected $config;
@@ -26,7 +27,7 @@ class auto_login extends ModuleObject {
 
         $this->config_session = new stdClass();
         // 자동로그인의 경우 개인이 혼자서 이용하는 장치 구분을 위해 isMobileCheckByAgent 를 이용합니다.
-        if(Mobile::isMobileCheckByAgent()) {
+        if(Mobile::isFromMobilePhone()) {
             $this->config_session->auto_login_max_time = $this->config->auto_login_max_time_mobile;
             $this->config_session->auto_login_update_required_time  = $this->config->auto_login_update_required_time_mobile;
         }else {
@@ -180,8 +181,16 @@ class auto_login extends ModuleObject {
             $this->config->auto_login_module_enabled = 'N';
         }
 
-        if(empty($this->config->auto_login_mobile_prefer)){
-            $this->config->auto_login_mobile_prefer = 'Y';
+        if(empty($this->config->auto_login_keep_signed_default_pc)){
+            $this->config->auto_login_keep_signed_default_pc = 'N';
+        }
+
+        if(empty($this->config->auto_login_keep_signed_default_mobile)){
+            $this->config->auto_login_keep_signed_default_mobile = 'N';
+        }
+
+        if(empty($this->config->auto_login_smart_time)){
+            $this->config->auto_login_smart_time = 604800;
         }
 
         if(empty($this->config->auto_login_cookie_name)){
@@ -205,6 +214,11 @@ class auto_login extends ModuleObject {
             $this->config->auto_login_update_required_time_mobile = 1209600;
         }
 
+
+
+
+
+
         $oMemberModel = getModel('member');
         $group_list = $oMemberModel->getGroups();
         if(!isset($this->config->auto_login_limit_by_group_)){
@@ -218,6 +232,12 @@ class auto_login extends ModuleObject {
 
         if(empty($this->config->auto_login_limit_by_is_admin)){
             $this->config->auto_login_limit_by_is_admin = 1;
+        }
+
+
+        if(empty($this->config->auto_login_cookie_encryption_cipher_mode) ||
+            $this->config->auto_login_cookie_encryption_cipher_mode !== AesPhpSimple::getPreferedMode() ) {
+            $this->config->auto_login_cookie_encryption_cipher_mode = AesPhpSimple::getPreferedMode();
         }
 
         $oModuleController = getController('module');
@@ -300,7 +320,15 @@ class auto_login extends ModuleObject {
         if(empty($this->config->auto_login_module_enabled)){
             return true;
         }
-        if(empty($this->config->auto_login_mobile_prefer)){
+        if(empty($this->config->auto_login_keep_signed_default_pc)){
+            return true;
+        }
+
+        if(empty($this->config->auto_login_keep_signed_default_mobile)){
+            return true;
+        }
+
+        if(empty($this->config->auto_login_smart_time)){
             return true;
         }
 
@@ -322,10 +350,12 @@ class auto_login extends ModuleObject {
             return true;
         }
 
-
         if(empty($this->config->auto_login_update_required_time_mobile)){
             return true;
         }
+
+
+
 
         $oMemberModel = getModel('member');
         $group_list = $oMemberModel->getGroups();
@@ -336,6 +366,13 @@ class auto_login extends ModuleObject {
         }
 
         if(empty($this->config->auto_login_limit_by_is_admin)){
+            return true;
+        }
+
+
+
+        if(empty($this->config->auto_login_cookie_encryption_cipher_mode) ||
+            $this->config->auto_login_cookie_encryption_cipher_mode !== AesPhpSimple::getPreferedMode() ){
             return true;
         }
 
