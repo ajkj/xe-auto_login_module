@@ -207,7 +207,7 @@ class auto_loginController extends auto_login {
 
 
 
-        setCookie($this->config->auto_login_cookie_name.'_smt','null',1,'/',$_SERVER['HTTP_HOST']);
+        $this->deleteSmartLoginCookie();
         if(isset($cookie)){
             setcookie($this->config->auto_login_cookie_name,'null',1,'/',$_SERVER['HTTP_HOST']);
             $token_hmac = hash_hmac('sha256',$cookie,$this->parseUAForAutoLoginToken(),false);

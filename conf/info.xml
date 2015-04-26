@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <module version="0.2">
-    <title xml:lang="ko">자동로그인 모듈</title>
+    <title xml:lang="ko">자동 로그인 모듈</title>
     <title xml:lang="en">AutoLogin</title>
     <description xml:lang="ko">자동 로그인 모듈 입니다.</description>
     <version>1.0.5</version>
