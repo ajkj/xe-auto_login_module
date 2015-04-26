@@ -138,7 +138,10 @@ class auto_loginController extends auto_login {
         }
 
 
-        $this->deleteSmartLoginCookie();
+        if($this->config->auto_login_keep_signed_default_pc =='S' ||
+            $this->config->auto_login_keep_signed_default_mobile =='S'){
+            $this->deleteSmartLoginCookie();
+        }
 
 
         // 자동로그이 허용 상태 조회
@@ -207,7 +210,10 @@ class auto_loginController extends auto_login {
 
 
 
-        $this->deleteSmartLoginCookie();
+        if($this->config->auto_login_keep_signed_default_pc =='S' ||
+            $this->config->auto_login_keep_signed_default_mobile =='S'){
+            $this->deleteSmartLoginCookie();
+        }
         if(isset($cookie)){
             setcookie($this->config->auto_login_cookie_name,'null',1,'/',$_SERVER['HTTP_HOST']);
             $token_hmac = hash_hmac('sha256',$cookie,$this->parseUAForAutoLoginToken(),false);
