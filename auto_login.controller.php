@@ -97,11 +97,14 @@ class auto_loginController extends auto_login {
         }
 
 
+
+        $keep_signed = Context::get('keep_signed');
+
         if( Mobile::isFromMobilePhone() === false)
         {
           if($this->config->auto_login_keep_signed_default_pc ==='S'
               && isset($GLOBALS['AUTO_LOGIN_DOING']) === false
-              && empty(Context::get('keep_signed'))){
+              && empty($keep_signed) === true){
               $this->updateSmartLoginCookie($logged_info);
           }
         }
@@ -109,7 +112,7 @@ class auto_loginController extends auto_login {
         {
             if($this->config->auto_login_keep_signed_default_mobile ==='S'
                 && isset($GLOBALS['AUTO_LOGIN_DOING']) === false
-                && empty(Context::get('keep_signed'))){
+                && empty($keep_signed) === true){
                 $this->updateSmartLoginCookie($logged_info);
             }
         }
