@@ -14,7 +14,7 @@ class auto_login extends ModuleObject {
         $this->config = $oModuleModel->getModuleConfig('auto_login');
 
         $this->config_static = new stdClass();
-        $this->config_static->cookie_ssl = (Context::getSslStatus() === 'always') ? true : false;
+        $this->config_static->cookie_secure = (Context::getSslStatus() === 'always') ? true : false;
         $this->config_static->cookie_httponly = true;
         $this->config_static->cookie_expire = 1;
 
