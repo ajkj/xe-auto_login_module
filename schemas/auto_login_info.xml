@@ -1,9 +1,9 @@
 <table name="auto_login_info">
-    <column name="member_srl" type="number" size="11" notnull="notnull"/>
+    <column name="member_srl" type="number" notnull="notnull"/>
     <column name="auto_login_token" type="char" size="64" notnull="notnull" unique="unique_key" />
     <column name="ip_address" type="varchar" size="39" notnull="notnull" />
-    <column name="time_added" type="bignumber" size="8"/>
-    <column name="time_max_valid_until" type="bignumber" size="8"/>
-    <column name="time_last_auto_login" type="bignumber" size="8"/>
+    <column name="time_added" type="bignumber" />
+    <column name="time_max_valid_until" type="bignumber"/>
+    <column name="time_last_auto_login" type="bignumber" />
     <column name="user_agent" type="varchar" size="300"/>
 </table>
