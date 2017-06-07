@@ -197,7 +197,7 @@ class auto_loginController extends auto_login {
 
         }
 
-        setcookie($this->config->auto_login_cookie_name, $token, time()+$this->config_session->auto_login_max_time ,'/' , $_SERVER['HTTP_HOST'], $this->config_static->cookie_secure, $this->config_static->cookie_httponly);
+        setcookie($this->config->auto_login_cookie_name, $token, time()+$this->config_session->auto_login_max_time ,'/' , $this->getDomain(), $this->config_static->cookie_secure, $this->config_static->cookie_httponly);
         return new Object();
     }
 
@@ -218,7 +218,7 @@ class auto_loginController extends auto_login {
             $this->deleteSmartLoginCookie();
         }
         if(isset($cookie)){
-            setcookie($this->config->auto_login_cookie_name,'null',1,'/',$_SERVER['HTTP_HOST']);
+            setcookie($this->config->auto_login_cookie_name,'null',1,'/', $this->getDomain());
             $token_hmac = hash_hmac('sha256',$cookie,$this->parseUAForAutoLoginToken(),false);
 
             $args = new stdClass();
@@ -327,13 +327,13 @@ class auto_loginController extends auto_login {
 
         if($query_result->toBool() !== true)
         {
-            setcookie($this->config->auto_login_cookie_name,'null',1,'/',$_SERVER['HTTP_HOST']);
+            setcookie($this->config->auto_login_cookie_name,'null',1,'/', $this->getDomain());
             return new Object();
         }
 
         if(count($query_result->data)  < 1)
         {
-            setcookie($this->config->auto_login_cookie_name,'null',1,'/',$_SERVER['HTTP_HOST']);
+            setcookie($this->config->auto_login_cookie_name,'null',1,'/', $this->getDomain());
             return new Object();
         }
 
@@ -580,14 +580,14 @@ class auto_loginController extends auto_login {
                 && $arr[1] > $now -$this->config->auto_login_smart_time
                 && $arr[2] > ($arr[1] + 43200))
             {
-                setcookie($this->config->auto_login_cookie_name.'_smt', 'Y', $now+$this->config->auto_login_smart_time,'/', $_SERVER['HTTP_HOST'], $this->config_static->cookie_secure, $this->config_static->cookie_httponly);
+                setcookie($this->config->auto_login_cookie_name.'_smt', 'Y', $now+$this->config->auto_login_smart_time,'/', $this->getDomain(), $this->config_static->cookie_secure, $this->config_static->cookie_httponly);
                 return;
             }
             // 2번째 시간이 없이 1번째 시간만 존재하고, 1번째 접속 시간이 현재시간보다 12시간 이전이라면 2번째 쿠키를 추가해 줍니다.
             elseif(isset($arr[1]) && $arr[1]+43200 < $now && $arr[1] && $arr[1] > $now -$this->config->auto_login_smart_time )
             {
                 $auto_login_cookie = $oAES->encrypt($auto_login_cookie.'@'.$now, $this->config->auto_login_cookie_encryption_password, 'base64_uri');
-                setcookie($this->config->auto_login_cookie_name.'_smt', $auto_login_cookie , $now+$this->config->auto_login_smart_time,'/', $_SERVER['HTTP_HOST'], $this->config_static->cookie_secure, $this->config_static->cookie_httponly);
+                setcookie($this->config->auto_login_cookie_name.'_smt', $auto_login_cookie , $now+$this->config->auto_login_smart_time,'/', $this->getDomain(), $this->config_static->cookie_secure, $this->config_static->cookie_httponly);
             }
         }
 
@@ -597,7 +597,7 @@ class auto_loginController extends auto_login {
         $auto_login_cookie_string = $logged_info->member_srl .'@'. time();
         $oAES = new AesPhpSimple($this->config->auto_login_cookie_encryption_cipher_mode);
         $result = $oAES->encrypt($auto_login_cookie_string,$this->config->auto_login_cookie_encryption_password, 'base64_uri');
-        setcookie($this->config->auto_login_cookie_name.'_smt', $result, time()+1209600,'/', $_SERVER['HTTP_HOST'], $this->config_static->cookie_secure, $this->config_static->cookie_httponly);
+        setcookie($this->config->auto_login_cookie_name.'_smt', $result, time()+1209600,'/', $this->getDomain(), $this->config_static->cookie_secure, $this->config_static->cookie_httponly);
         return;
     }
 
@@ -609,7 +609,12 @@ class auto_loginController extends auto_login {
             return;
         }
         else{
-            setcookie($this->config->auto_login_cookie_name.'_smt', 'null', 1,'/', $_SERVER['HTTP_HOST'], $this->config_static->cookie_secure, $this->config_static->cookie_httponly);
+            setcookie($this->config->auto_login_cookie_name.'_smt', 'null', 1,'/', $this->getDomain(), $this->config_static->cookie_secure, $this->config_static->cookie_httponly);
         }
     }
+
+	/** @return string */
+	private function getDomain() {
+		return substr($_SERVER['HTTP_HOST'],0,strpos($_SERVER['HTTP_HOST'], ':'));
+	}
 }
