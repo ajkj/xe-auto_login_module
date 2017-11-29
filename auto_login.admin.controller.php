@@ -9,12 +9,12 @@ class auto_loginAdminController extends auto_login {
 
     /**
      * @info :  관리자 페이지에서 설정 변경을 처리합니다. 설정 default 처리는 auto_login.class.php 에서 처리합니다.
-     * @return Object
+     * @return BaseObject
      */
     public function procAuto_loginAdminConfigChange(){
 
         if(checkCSRF() !== true){
-            return new Object(-1,'AutoLogin Error 403');
+            return $this->createObject(-1,'AutoLogin Error 403');
         }
         $oModuleModel = getModel('module');
         $config = $oModuleModel->getModuleConfig('auto_login');

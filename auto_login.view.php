@@ -24,7 +24,7 @@ class auto_loginView extends auto_login
 
         if(Context::get('is_logged') !== true)
         {
-            return new Object(-1, 'Login Required');
+            return $this->createObject(-1, 'Login Required');
         }
 
         if(isset($_SESSION[$this->module_self_info->module_name]['status']))
@@ -40,7 +40,7 @@ class auto_loginView extends auto_login
                     $this->setRedirectUrl($_SESSION[$this->module_self_info->module_name]['return_url']);
                     unset($_SESSION[$this->module_self_info->module_name]['status']);
                     unset($_SESSION[$this->module_self_info->module_name]['return_url']);
-                    return new Object();
+                    return $this->createObject();
                 }
                 else
                 {
@@ -71,7 +71,7 @@ class auto_loginView extends auto_login
 
         if($query_result->toBool() !== true)
         {
-            return new Object(-1, 'AutoLogin Module : Error Code 842');
+            return $this->createObject(-1, 'AutoLogin Module : Error Code 842');
         }
 
         if(count($query_result->data) === 0){
@@ -117,7 +117,7 @@ class auto_loginView extends auto_login
 
         $this->setTemplateFile('auto_login_manager');
 
-        return new Object();
+        return $this->createObject();
     }
 
     protected function unixTimeToDate($time =0)

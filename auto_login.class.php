@@ -104,7 +104,7 @@ class auto_login extends ModuleObject {
         }
 
 
-        return new Object();
+        return $this->createObject();
     }
 
     function moduleInstall()
@@ -242,7 +242,7 @@ class auto_login extends ModuleObject {
 
         $oModuleController = getController('module');
         $oModuleController->insertModuleConfig('auto_login',$this->config);
-        return new Object();
+        return $this->createObject();
     }
 
 
@@ -397,5 +397,13 @@ class auto_login extends ModuleObject {
      */
     protected function base64_encode_uri($str){
         return str_replace(array('+','/','='),array('-','_',''),base64_encode($str));
+    }
+
+    protected function createObject($error = 0, $message = 'success') {
+        if(class_exists("BaseObject")) {
+            return new BaseObject($error, $message);
+        } else {
+            return new Object($error, $message);
+        }
     }
 }
